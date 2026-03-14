@@ -5,12 +5,21 @@
       "name": "id",
       "data_type": "INTEGER",
       "nullable": true
-    },
-    {
-      "name": "name",
-      "data_type": "TEXT",
-      "nullable": true
     }
   ],
-  "rows": []
+  "rows": [
+    [
+      {
+        "Integer": 1
+      }
+    ],
+    [
+      "Null"
+    ],
+    [
+      {
+        "Integer": 3
+      }
+    ]
+  ]
 }
