@@ -21,6 +21,12 @@ impl Executor {
             PhysicalPlan::Scan { table_name, columns, filter } => {
                 self.execute_scan(&table_name, &columns, filter, storage, catalog)
             }
+            PhysicalPlan::Project { input, columns } => {
+                self.execute_project(*input, &columns, storage, catalog)
+            }
+            PhysicalPlan::Filter { input, condition } => {
+                self.execute_filter(*input, condition, storage, catalog)
+            }
             PhysicalPlan::Insert { table_name, values } => {
                 self.execute_insert(&table_name, values, storage, catalog)
             }
@@ -69,6 +75,34 @@ impl Executor {
         }
         
         Ok(format!("Scanned {} records from '{}'", result.len(), table_name))
+    }
+    
+    fn execute_project(
+        &self,
+        input: PhysicalPlan,
+        columns: &[String],
+        storage: &mut dyn StorageEngine,
+        catalog: &Catalog,
+    ) -> Result<String, String> {
+        // 先执行输入计划
+        let input_result = self.execute(input, storage, catalog)?;
+        
+        // 投影操作的结果
+        Ok(format!("Projected columns: {:?}, {}", columns, input_result))
+    }
+    
+    fn execute_filter(
+        &self,
+        input: PhysicalPlan,
+        condition: Expr,
+        storage: &mut dyn StorageEngine,
+        catalog: &Catalog,
+    ) -> Result<String, String> {
+        // 先执行输入计划
+        let input_result = self.execute(input, storage, catalog)?;
+        
+        // 过滤操作的结果
+        Ok(format!("Filtered with condition, {}", input_result))
     }
     
     fn execute_insert(

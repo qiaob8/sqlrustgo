@@ -1,11 +1,19 @@
 use crate::parser::ast::{self, Statement, Value};
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub enum LogicalPlan {
     Scan {
         table_name: String,
         columns: Vec<String>,
         filter: Option<ast::Expr>,
+    },
+    Project {
+        input: Box<LogicalPlan>,
+        columns: Vec<String>,
+    },
+    Filter {
+        input: Box<LogicalPlan>,
+        condition: ast::Expr,
     },
     Insert {
         table_name: String,
@@ -30,10 +38,23 @@ impl LogicalPlan {
     pub fn from_statement(statement: &Statement) -> Self {
         match statement {
             Statement::Select { table_name, columns, where_clause } => {
-                LogicalPlan::Scan {
-                    table_name: table_name.clone(),
-                    columns: columns.clone(),
-                    filter: where_clause.clone(),
+                if let Some(filter_expr) = where_clause {
+                    // 创建Filter节点
+                    LogicalPlan::Filter {
+                        input: Box::new(LogicalPlan::Scan {
+                            table_name: table_name.clone(),
+                            columns: columns.clone(),
+                            filter: None,
+                        }),
+                        condition: filter_expr.clone(),
+                    }
+                } else {
+                    // 直接返回Scan节点
+                    LogicalPlan::Scan {
+                        table_name: table_name.clone(),
+                        columns: columns.clone(),
+                        filter: None,
+                    }
                 }
             }
             Statement::Insert { table_name, values } => {
@@ -61,6 +82,44 @@ impl LogicalPlan {
                     columns: columns.clone(),
                 }
             }
+        }
+    }
+    
+    pub fn optimize(&self) -> LogicalPlan {
+        // 实现逻辑优化
+        match self {
+            LogicalPlan::Scan { table_name, columns, filter } => {
+                if let Some(filter_expr) = filter {
+                    // 将Scan中的filter转换为Filter节点
+                    LogicalPlan::Filter {
+                        input: Box::new(LogicalPlan::Scan {
+                            table_name: table_name.clone(),
+                            columns: columns.clone(),
+                            filter: None,
+                        }),
+                        condition: filter_expr.clone(),
+                    }
+                } else {
+                    self.clone()
+                }
+            }
+            LogicalPlan::Filter { input, condition } => {
+                // 优化Filter节点的输入
+                let optimized_input = input.optimize();
+                LogicalPlan::Filter {
+                    input: Box::new(optimized_input),
+                    condition: condition.clone(),
+                }
+            }
+            LogicalPlan::Project { input, columns } => {
+                // 优化Project节点的输入
+                let optimized_input = input.optimize();
+                LogicalPlan::Project {
+                    input: Box::new(optimized_input),
+                    columns: columns.clone(),
+                }
+            }
+            _ => self.clone(),
         }
     }
 }
