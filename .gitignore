@@ -2,6 +2,11 @@
 target/
 Cargo.lock
 
+# Coverage reports
+coverage/
+build_rs_cov.profraw
+tarpaulin-report.html
+
 # IDE
 .idea/
 .vscode/
@@ -15,3 +20,6 @@ Thumbs.db
 *.db
 *.log
 .worktrees/
+
+# Temporary files
+*.profraw
