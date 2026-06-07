@@ -64,6 +64,8 @@ pub enum Token {
     Rollback,
     Grant,
     Revoke,
+    Limit,
+    Offset,
 
     // Data Types
     Integer,
@@ -156,6 +158,8 @@ pub fn is_keyword(s: &str) -> bool {
             | "ROLLBACK"
             | "GRANT"
             | "REVOKE"
+            | "LIMIT"
+            | "OFFSET"
             | "INTEGER"
             | "TEXT"
             | "FLOAT"

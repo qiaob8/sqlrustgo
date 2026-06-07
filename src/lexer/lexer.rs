@@ -270,6 +270,8 @@ impl<'a> Lexer<'a> {
                     "AVG" => Token::Avg,
                     "MIN" => Token::Min,
                     "MAX" => Token::Max,
+                    "LIMIT" => Token::Limit,
+                    "OFFSET" => Token::Offset,
                     _ => Token::Identifier(ident),
                 }
             }
@@ -432,5 +434,32 @@ mod tests {
         // Test escaped single quote ('')
         let tokens = tokenize("SELECT ''");
         assert_eq!(tokens[1], Token::StringLiteral("".to_string()));
+    }
+
+    #[test]
+    fn test_lexer_limit_keyword() {
+        let tokens = tokenize("SELECT * FROM users LIMIT 10");
+        assert_eq!(tokens[0], Token::Select);
+        assert_eq!(tokens[1], Token::Star);
+        assert_eq!(tokens[2], Token::From);
+        assert_eq!(tokens[3], Token::Identifier("users".to_string()));
+        assert_eq!(tokens[4], Token::Limit);
+        assert_eq!(tokens[5], Token::NumberLiteral("10".to_string()));
+    }
+
+    #[test]
+    fn test_lexer_offset_keyword() {
+        let tokens = tokenize("SELECT * FROM users LIMIT 10 OFFSET 20");
+        assert_eq!(tokens[4], Token::Limit);
+        assert_eq!(tokens[5], Token::NumberLiteral("10".to_string()));
+        assert_eq!(tokens[6], Token::Offset);
+        assert_eq!(tokens[7], Token::NumberLiteral("20".to_string()));
+    }
+
+    #[test]
+    fn test_lexer_limit_offset_case_insensitive() {
+        let tokens = tokenize("select * from users limit 5 offset 10");
+        assert_eq!(tokens[4], Token::Limit);
+        assert_eq!(tokens[6], Token::Offset);
     }
 }
