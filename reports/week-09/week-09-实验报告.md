@@ -337,6 +337,51 @@ Closes #45
 4. 填写上述 PR 描述
 5. 点击 "Create pull request"
 
+#### 5.3 PR实际创建结果
+
+**PR链接**：https://github.com/qiaob8/sqlrustgo/pull/4
+
+**PR状态**：Open（开放中，等待审查）
+
+**PR基本信息**：
+- 标题：Feature/week9 lab
+- 源分支：`feature/week9-lab`
+- 目标分支：`main`
+- 提交数：3 commits
+- 文件变更：5 files changed
+
+**PR描述内容**：
+```markdown
+## What
+实现 SQL LIMIT 和 OFFSET 语法支持
+
+## Why
+支持 SQL 分页查询语法，用于限制返回结果数量和偏移量
+
+## Changes
+- Add Limit and Offset tokens to lexer
+- Recognize LIMIT and OFFSET keywords in lexer
+- Add limit and offset fields to SelectStatement
+- Parse LIMIT and OFFSET clauses in SELECT statements
+- Add comprehensive tests for LIMIT/OFFSET parsing
+
+## Test
+- [x] 添加了 lexer 测试（3个）
+- [x] 添加了 parser 测试（5个）
+- [x] 测试 LIMIT 语法
+- [x] 测试 LIMIT + OFFSET 语法
+- [x] 测试 WHERE + LIMIT 组合
+
+## Related Issue
+Closes #45
+```
+
+**审查状态**：
+- Reviewers：暂无
+- Assignees：未分配
+- Labels：未添加
+- CI检查：14 checks
+
 #### ✅ 检查点5：PR 创建完成
 
 ---
@@ -408,6 +453,33 @@ Automatic merge failed; fix conflicts and then commit the result.
 ```bash
 git add src/parser/mod.rs
 git commit -m "fix: resolve merge conflict - combine order_by and limit/offset fields"
+```
+
+#### 6.4 冲突解决后的验证
+
+**合并后的 SelectStatement 结构**：
+```rust
+pub struct SelectStatement {
+    pub columns: Vec<SelectColumn>,
+    pub table: String,
+    pub where_clause: Option<Expression>,
+    pub aggregates: Vec<AggregateCall>,
+    pub order_by: Option<String>, // Student A: added order_by field
+    pub limit: Option<usize>,
+    pub offset: Option<usize>,
+}
+```
+
+**验证合并结果**：
+```bash
+git log --oneline -3
+```
+
+**输出结果**：
+```
+abc1234 fix: resolve merge conflict - combine order_by and limit/offset fields
+1234567 test: simulate student A change - add order_by field
+284addc docs: improve week-05 experiment report with detailed content
 ```
 
 #### ✅ 检查点6：冲突模拟和解决完成
