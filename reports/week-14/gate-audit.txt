@@ -1,0 +1,7 @@
+Cargo Audit Summary
+===================
+Database:  1134 advisories (last-updated: 2026-06-18)
+Scanned:   152 dependencies
+Result:    0 vulnerabilities found, 0 warnings
+
+Status: PASSED

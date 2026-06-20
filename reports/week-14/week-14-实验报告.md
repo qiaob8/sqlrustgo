@@ -153,7 +153,7 @@ v5 规范要求 `git checkout develop/v3.0.0`，但本项目**未维护该分支
 
 #### 3.4.2 运行完整门禁
 
-由于 Windows 沙箱限制，逐项手工执行门禁（[gate-build.log](file:///d:/sqlrustgo/project-main/reports/week-14/gate-build.log)、[gate-test.log](file:///d:/sqlrustgo/project-main/reports/week-14/gate-test.log)、[gate-clippy.log](file:///d:/sqlrustgo/project-main/reports/week-14/gate-clippy.log)、[gate-fmt.log](file:///d:/sqlrustgo/project-main/reports/week-14/gate-fmt.log)、[gate-audit.log](file:///d:/sqlrustgo/project-main/reports/week-14/gate-audit.log)）。
+由于 Windows 沙箱限制，逐项手工执行门禁（[gate-build.txt](file:///d:/sqlrustgo/project-main/reports/week-14/gate-build.txt)、[gate-test.txt](file:///d:/sqlrustgo/project-main/reports/week-14/gate-test.txt)、[gate-clippy.txt](file:///d:/sqlrustgo/project-main/reports/week-14/gate-clippy.txt)、[gate-fmt.txt](file:///d:/sqlrustgo/project-main/reports/week-14/gate-fmt.txt)、[gate-audit.txt](file:///d:/sqlrustgo/project-main/reports/week-14/gate-audit.txt)）。
 
 #### ✅ 检查点 4：验收完成
 
@@ -179,12 +179,12 @@ v5 规范要求 `git checkout develop/v3.0.0`，但本项目**未维护该分支
 
 | 步骤 | 命令                              | 退出码 | 结果      | 日志 |
 | -- | ------------------------------- | --- | ------- | -- |
-| 1  | cargo build --release           | 0   | ✅ PASS | [gate-build.log](file:///d:/sqlrustgo/project-main/reports/week-14/gate-build.log) |
-| 2  | cargo test --all-features       | 0   | ✅ PASS（399/0/5） | [gate-test.log](file:///d:/sqlrustgo/project-main/reports/week-14/gate-test.log) |
-| 3  | cargo clippy --all-features     | 0   | ⚠️ 2 warnings | [gate-clippy.log](file:///d:/sqlrustgo/project-main/reports/week-14/gate-clippy.log) |
-| 4  | cargo fmt --check               | 101 | ❌ 5 files | [gate-fmt.log](file:///d:/sqlrustgo/project-main/reports/week-14/gate-fmt.log) |
+| 1  | cargo build --release           | 0   | ✅ PASS | [gate-build.txt](file:///d:/sqlrustgo/project-main/reports/week-14/gate-build.txt) |
+| 2  | cargo test --all-features       | 0   | ✅ PASS（399/0/5） | [gate-test.txt](file:///d:/sqlrustgo/project-main/reports/week-14/gate-test.txt) |
+| 3  | cargo clippy --all-features     | 0   | ⚠️ 2 warnings | [gate-clippy.txt](file:///d:/sqlrustgo/project-main/reports/week-14/gate-clippy.txt) |
+| 4  | cargo fmt --check               | 101 | ❌ 5 files | [gate-fmt.txt](file:///d:/sqlrustgo/project-main/reports/week-14/gate-fmt.txt) |
 | 5  | cargo tarpaulin                 | 跳过  | ⏸ Linux-only | - |
-| 6  | cargo audit                     | 0   | ✅ PASS（0/152） | [gate-audit.log](file:///d:/sqlrustgo/project-main/reports/week-14/gate-audit.log) / [gate-audit.json](file:///d:/sqlrustgo/project-main/reports/week-14/gate-audit.json) |
+| 6  | cargo audit                     | 0   | ✅ PASS（0/152） | [gate-audit.txt](file:///d:/sqlrustgo/project-main/reports/week-14/gate-audit.txt) / [gate-audit.json](file:///d:/sqlrustgo/project-main/reports/week-14/gate-audit.json) |
 
 ### 4.3 测试详情
 
@@ -366,11 +366,11 @@ git push origin experiment/week-14-202442020128
 
 | 文件 | 用途 |
 | -- | -- |
-| [gate-build.log](file:///d:/sqlrustgo/project-main/reports/week-14/gate-build.log) | cargo build --release |
-| [gate-test.log](file:///d:/sqlrustgo/project-main/reports/week-14/gate-test.log) | cargo test --all-features |
-| [gate-clippy.log](file:///d:/sqlrustgo/project-main/reports/week-14/gate-clippy.log) | cargo clippy --all-features |
-| [gate-fmt.log](file:///d:/sqlrustgo/project-main/reports/week-14/gate-fmt.log) | cargo fmt --check（fallback: rustfmt） |
-| [gate-audit.log](file:///d:/sqlrustgo/project-main/reports/week-14/gate-audit.log) | cargo audit 文本摘要 |
+| [gate-build.txt](file:///d:/sqlrustgo/project-main/reports/week-14/gate-build.txt) | cargo build --release |
+| [gate-test.txt](file:///d:/sqlrustgo/project-main/reports/week-14/gate-test.txt) | cargo test --all-features |
+| [gate-clippy.txt](file:///d:/sqlrustgo/project-main/reports/week-14/gate-clippy.txt) | cargo clippy --all-features |
+| [gate-fmt.txt](file:///d:/sqlrustgo/project-main/reports/week-14/gate-fmt.txt) | cargo fmt --check（fallback: rustfmt） |
+| [gate-audit.txt](file:///d:/sqlrustgo/project-main/reports/week-14/gate-audit.txt) | cargo audit 文本摘要 |
 | [gate-audit.json](file:///d:/sqlrustgo/project-main/reports/week-14/gate-audit.json) | cargo audit --json 完整结果 |
 
 ### 附录 C：文件清单
@@ -384,11 +384,11 @@ scripts/
 
 reports/week-14/
 ├── week-14-实验报告.md             # 本文档
-├── gate-build.log
-├── gate-test.log
-├── gate-clippy.log
-├── gate-fmt.log
-├── gate-audit.log
+├── gate-build.txt
+├── gate-test.txt
+├── gate-clippy.txt
+├── gate-fmt.txt
+├── gate-audit.txt
 └── gate-audit.json
 ```
 
