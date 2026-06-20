@@ -1,0 +1,37 @@
+error: this `if let` can be collapsed into the outer `if let`
+   --> src\executor\mod.rs:389:25
+    |
+389 | /                         if let Value::Integer(key) = value {
+390 | |                             index_updates.push((col_name.clone(), *key, row_id));
+391 | |                         }
+    | |_________________________^
+    |
+help: the outer pattern can be modified to include the inner pattern
+   --> src\executor\mod.rs:388:33
+    |
+388 |                     if let Some(value) = row.get(*col_idx) {
+    |                                 ^^^^^ replace this binding
+389 |                         if let Value::Integer(key) = value {
+    |                                ^^^^^^^^^^^^^^^^^^^ with this pattern
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.96.0/index.html#collapsible_match
+    = note: `-D clippy::collapsible-match` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::collapsible_match)]`
+
+error: this `if let` can be collapsed into the outer `if let`
+   --> src\storage\file_storage.rs:260:17
+    |
+260 | /                 if let Value::Integer(key) = value {
+261 | |                     index.insert(*key, row_id as u32);
+262 | |                 }
+    | |_________________^
+    |
+help: the outer pattern can be modified to include the inner pattern
+   --> src\storage\file_storage.rs:259:25
+    |
+259 |             if let Some(value) = row.get(column_index) {
+    |                         ^^^^^ replace this binding
+260 |                 if let Value::Integer(key) = value {
+    |                        ^^^^^^^^^^^^^^^^^^^ with this pattern
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.96.0/index.html#collapsible_match
+
+error: could not compile `sqlrustgo` (lib) due to 2 previous errors

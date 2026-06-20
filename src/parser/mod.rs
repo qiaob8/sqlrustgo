@@ -910,13 +910,6 @@ mod tests {
     }
 
     #[test]
-    fn test_parse_select_with_limit() {
-        let result = parse("SELECT * FROM users LIMIT 10");
-        // May not be fully supported
-        assert!(result.is_ok() || result.is_err());
-    }
-
-    #[test]
     fn test_parse_create_table_multiple_columns() {
         let result = parse("CREATE TABLE t (id INTEGER, name TEXT, age INTEGER, active BOOLEAN)");
         assert!(result.is_ok() || result.is_err());

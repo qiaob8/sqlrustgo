@@ -1,0 +1,16 @@
+{
+  "saved_at": "2026-06-14T15:50:00+08:00",
+  "commit": "0177764",
+  "branch": "experiment/week-10-202442020128",
+  "DELETE": 97.82,
+  "INSERT": 122.56,
+  "SELECT": 3081.94,
+  "UPDATE": 129.78,
+  "iterations": 1000,
+  "_note": "Baseline captured before week-12 regression experiment. Recorded from tests/qps_benchmark_test.rs.",
+  "_environment": {
+    "os": "Windows",
+    "build": "dev profile (unoptimized + debuginfo)",
+    "iterations_per_op": 1000
+  }
+}
