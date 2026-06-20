@@ -426,4 +426,18 @@ git push origin experiment/week-14-202442020128
 
 ### 附录 F：commit 与 push 记录
 
-（实验完成后填充）
+**实际提交记录**（2026-06-20）：
+
+| Commit  | 说明                                                                  |
+| ------- | ------------------------------------------------------------------- |
+| `f4f9a87` | week-14: add release gate checklist, gate script, and lab report    |
+| `7b20f54` | week-14: rename gate logs to .txt to bypass .gitignore, update report links |
+
+**推送记录**：
+
+| 远程       | 仓库                                 | 推送结果                            |
+| -------- | ---------------------------------- | ------------------------------- |
+| `qiaob8` | github.com/qiaob8/sqlrustgo        | ✅ `7b20f54` (new branch)       |
+| `origin` | gitee.com/yangqi-qiao/sqlrustgo    | ✅ `7b20f54` (new branch)       |
+
+> 本次实验 14 共 2 个 commit（`f4f9a87` → `7b20f54`），已推送到 GitHub (qiaob8) 和 Gitee (origin) 两个远程仓库的新分支 `experiment/week-14-202442020128`。
