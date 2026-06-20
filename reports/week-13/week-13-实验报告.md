@@ -4,7 +4,7 @@
 | -------- | ------------------------------------------- |
 | **实验名称** | 安全扫描与审计 —— 修车技能第 1 周                       |
 | **实验周次** | 第 13 周                                      |
-| **实验日期** | 2026 年 6 月 14 日                            |
+| **实验日期** | 2026 年 6 月 20 日                            |
 | **学生姓名** | 阳奇                                          |
 | **学号**   | 202442020128                                |
 | **班级**   | 2024级软件工程1班                                 |
@@ -192,19 +192,18 @@ cargo clippy --all-features -- -D warnings
 
 #### 3.3.3 AI 辅助安全审查
 
-**审查对象**：`src/storage/file_storage.rs` 第 250-270 行索引构建代码
+**审查对象**：`src/storage/file_storage.rs` 第 256-265 行索引构建代码
 
 **Prompt**（保存于 [`ai-security-review-prompt.md`](file:///d:/sqlrustgo/project-main/reports/week-13/ai-security-review-prompt.md)）：
 
 ```
-审查 src/storage/file_storage.rs 第 250-270 行的索引构建代码：
-for row in rows.iter() {
+审查 src/storage/file_storage.rs 第 256-265 行的索引构建代码：
+for (row_id, row) in table.rows.iter().enumerate() {
     if let Some(value) = row.get(column_index) {
         if let Value::Integer(key) = value {
             index.insert(*key, row_id as u32);
         }
     }
-    row_id += 1;
 }
 请检查：1. SQL注入 2. 缓冲区溢出 3. 敏感信息泄露 4. 不安全的加密 5. 其他安全问题
 ```
@@ -225,12 +224,11 @@ for row in rows.iter() {
 
 #### 3.4.1 创建报告
 
-[`docs/security/security-report.md`](file:///d:/sqlrustgo/project-main/docs/security/security-report.md)（v5 指南要求位置），共 4 章节：
+[`docs/security/security-report.md`](file:///d:/sqlrustgo/project-main/docs/security/security-report.md)（v5 指南要求位置），共 3 章节：
 
 1. **依赖安全**（cargo audit JSON 结果 + 11 个核心依赖）
 2. **代码安全**（clippy + 危险模式统计 + AI 审查）
-3. **SQL 注入防护**（防护机制 + 风险评估）
-4. **建议修复项**（高/中/低 三档优先级）
+3. **建议修复项**（高/中/低 三档优先级）
 
 #### 3.4.2 提交命令
 
@@ -316,8 +314,8 @@ git push origin experiment/week-10-202442020128
 | 1   | `cargo install cargo-audit` 首次编译失败        | `C:\Users\qiao\AppData\Local\Temp\...` 超过 MAX_PATH 260 字符 | 设置 `TEMP=C:\tmp`（6 字符）→ 1分15秒成功              |
 | 2   | proc-macro2 build.rs 进程创建失败                | Windows `CreateProcessW` 返回"成功"但实际失败 | 同上，缩短临时目录路径后正常                                 |
 | 3   | 错误消息乱码（"鎿嶄綔鎴愬姛瀹屾垚銆"）                  | Big5 编码 vs GB2312 系统区域                 | 解决路径问题后不再触发乱码                                  |
-| 4   | 多次尝试 `cargo install` 失败累积 3 个日志文件         | 历史尝试保留                                | 已合并到 `cargo-audit-install-attempt.log` 并增加 1m15s 成功记录 |
-| 5   | `safety report` 误放在 `docs/security/` 与 week-13 报告 冲突 | 实验指南指定位置 + 实验报告位置不同                   | 双份保留：`docs/security/security-report.md`（指南要求）+ `reports/week-13/security-report.md`（报告关联） |
+| 4   | 多次尝试 `cargo install` 失败累积 3 个日志文件         | 历史尝试保留                                | 已删除冗余日志文件（保留 cargo-audit-result.json + clippy-output.log）|
+| 5   | `security-report.md` 在两处位置重复               | v5 指南指定 `docs/security/` 位置 + week-13 报告内部 | 只保留 v5 指南要求位置 `docs/security/security-report.md`，删除 week-13 内部重复 |
 | 6   | cargo-audit v0.21.0 与 v0.22.2 编译策略不同        | v0.21.0 缺某些依赖锁                          | 使用 v0.22.2（最新稳定版）                             |
 
 ***
@@ -371,8 +369,8 @@ git push origin experiment/week-10-202442020128
 | -------------- | ----------------- | -------------------------------------------- |
 | **依赖安全扫描**     | 无                 | `cargo audit` + Dependabot 配置完成               |
 | **代码安全扫描**     | 手动 grep           | 正则脚本 + clippy 严格模式 + 660 处危险模式清单               |
-| **配置文件**       | 最小 12 行           | 30 行 + 中英文注释 + 启用方法                            |
-| **安全报告**       | 无                 | `docs/security/security-report.md` 8 章 7 附录     |
+| **配置文件**       | 无                | 12 行（v5 指南规范）                                 |
+| **安全报告**       | 无                 | `docs/security/security-report.md` 3 章节            |
 | **CI 集成规划**    | 无                 | cargo audit 步骤设计 + clippy 已纳入 BP1            |
 | **安全检查项**      | 0 项               | 10 项（4 项 ✅，2 项 ⚠️）                            |
 
@@ -408,7 +406,7 @@ Harness 治理实战：
 | AI 工具           | 使用场景                              | 效果评价            |
 | --------------- | --------------------------------- | --------------- |
 | Claude Code     | 起草 `.github/dependabot.yml`        | 直接给出现成模板        |
-| Claude Code     | 设计安全报告章节结构                        | 7 章 + 7 附录 一次到位 |
+| Claude Code     | 设计安全报告章节结构                        | 3 章节（严格对齐 v5 规范） |
 | Claude Code     | 起草 unwrap 减少建议                     | 给出"执行器"和"WAL"优先级 |
 | Claude Code     | 分析 cargo-audit Windows 编译失败原因     | 给出"MAX_PATH" + "TEMP 短路径"两套方案 |
 | Claude Code     | 总结 Top 5 风险文件                      | 与人工分析一致         |
@@ -566,11 +564,11 @@ cargo clippy --all-features -- -D warnings
 
 ```
 warning: this `if let` can be collapsed into the outer `if let`
-  --> src\storage\file_storage.rs:259:25
+  --> src\executor\mod.rs:389:25
 warning: this `if let` can be collapsed into the outer `if let`
-  --> src\storage\file_storage.rs:262:13
+  --> src\storage\file_storage.rs:260:17
 warning: `sqlrustgo` (lib) generated 2 warnings
-    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.36s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 2.66s
 ```
 
 ### 附录 C：危险模式统计脚本
@@ -655,19 +653,17 @@ brew install cargo-audit
 
 ```
 .github/
-└── dependabot.yml                                    # Dependabot 配置（v5 指南 12 行版）
+└── dependabot.yml                                    # Dependabot 配置（v5 指南 12 行规范）
 
 docs/security/
-└── security-report.md                                # 安全审计报告（v5 指南要求位置）
+└── security-report.md                                # 安全审计报告（v5 指南要求位置，3 章节）
 
 reports/week-13/
-├── week-13-实验报告.md                              # 本报告（13,812 字节）
-├── security-report.md                                # 安全报告（同 week-13 目录版）
+├── week-13-实验报告.md                              # 本报告（10 章节）
 ├── cargo-audit-result.json                           # ✅ 真实 JSON 扫描结果（0 漏洞）
-├── clippy-output.log                                 # clippy 真实运行输出
-├── cargo-audit-install-attempt.log                   # 旧版失败日志（保留作历史记录）
-└── ai-security-review-prompt.md                      # AI 安全审查 prompt
+├── clippy-output.log                                 # clippy 真实运行输出（2 风格警告）
+└── ai-security-review-prompt.md                      # AI 安全审查 prompt 模板
 ```
 
-*最后更新: 2026-06-14*
+*最后更新: 2026-06-20*
 *🔧 修车技能第1周 - 安全扫描与审计*
