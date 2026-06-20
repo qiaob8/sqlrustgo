@@ -92,6 +92,37 @@ cargo audit
 2. 启用 **Dependabot alerts**
 3. 启用 **Dependabot security updates**
 
+**实际完成（API 验证，2026-06-20）**：
+
+| 步骤     | API 端点                                          | 响应                | 状态  |
+| ------ | ---------------------------------------------- | ----------------- | --- |
+| Dependabot alerts | `PUT /repos/qiaob8/sqlrustgo/vulnerability-alerts` | 204 No Content    | ✅ 启用 |
+| Dependabot security updates | `PUT /repos/qiaob8/sqlrustgo/automated-security-fixes` | 204 No Content    | ✅ 启用 |
+| 验证     | `GET /vulnerability-alerts`                     | 204（端点可访问 = 已启用）   | ✅   |
+
+**关键 PowerShell 代码**（无需手动点击 GitHub UI）：
+
+```powershell
+$token = "gho_xxxxx"  # GitHub Personal Access Token
+$headers = @{
+    Authorization = "Bearer $token"
+    Accept = "application/vnd.github+json"
+    "X-GitHub-Api-Version" = "2022-11-28"
+}
+
+# 1. 启用 Dependabot alerts
+Invoke-WebRequest -Method PUT `
+  -Uri "https://api.github.com/repos/qiaob8/sqlrustgo/vulnerability-alerts" `
+  -Headers $headers -UseBasicParsing
+
+# 2. 启用 Dependabot security updates（注意：不要带 body！）
+Invoke-WebRequest -Method PUT `
+  -Uri "https://api.github.com/repos/qiaob8/sqlrustgo/automated-security-fixes" `
+  -Headers $headers -UseBasicParsing
+```
+
+**踩坑记录**：第一次调用 security updates 端点时带了 body `{"enabled": true}`，返回 422。GitHub 文档明确说此端点**不需要 body**，去掉 body 后返回 204 No Content。
+
 #### 3.2.2 创建配置文件
 
 [`.github/dependabot.yml`](file:///d:/sqlrustgo/project-main/.github/dependabot.yml)：
