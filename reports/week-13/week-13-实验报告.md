@@ -273,6 +273,24 @@ git commit -m "week-13: add security scanning and audit lab"
 git push origin experiment/week-10-202442020128
 ```
 
+**实际提交记录**（2026-06-20）：
+
+| Commit  | 说明                                                       | 变更                     |
+| ------- | -------------------------------------------------------- | ---------------------- |
+| `2f8b08d` | week-13: add security scanning and audit lab             | 初始实验 13 提交              |
+| `f140edc` | week-13: document Dependabot API activation (204 No Content) | 补充 Dependabot 启用证据      |
+| `d51ce53` | week-13: clean up redundant content, fix stale references    | 清理冗余 + 修正陈旧引用           |
+| `98c0292` | week-13: re-check report, fix line numbers, rename clippy log | 二次检查 + 加回评分标准 + 行号修正    |
+
+**推送记录**：
+
+| 远程       | 仓库                                 | 推送结果                          | 推送范围                       |
+| -------- | ---------------------------------- | ----------------------------- | -------------------------- |
+| `qiaob8` | github.com/qiaob8/sqlrustgo        | ✅ `d51ce53..98c0292`         | 1 commit（增量）               |
+| `origin` | gitee.com/yangqi-qiao/sqlrustgo    | ✅ `a650f11..98c0292`         | 4 commits（含前 3 次实验 13 提交）  |
+
+> 本次实验 13 共 4 个 commit，已全部推送到 GitHub (qiaob8) 和 Gitee (origin) 两个远程仓库。
+
 ***
 
 ## 五、遇到的问题与解决
