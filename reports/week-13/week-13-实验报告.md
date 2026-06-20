@@ -217,7 +217,7 @@ for (row_id, row) in table.rows.iter().enumerate() {
 ```bash
 git add docs/security/ .github/dependabot.yml reports/week-13/
 git commit -m "week-13: add security scanning and audit lab"
-git push origin experiment/week-10-202442020128
+git push origin experiment/week-13-202442020128
 ```
 
 #### ✅ 检查点4：安全报告已保存
@@ -266,11 +266,11 @@ git push origin experiment/week-10-202442020128
 ### 4.5 提交方式
 
 ```bash
-git checkout -b experiment/week-10-202442020128
+git checkout -b experiment/week-13-202442020128
 mkdir -p reports/week-13
 git add docs/security/ .github/dependabot.yml reports/week-13/
 git commit -m "week-13: add security scanning and audit lab"
-git push origin experiment/week-10-202442020128
+git push origin experiment/week-13-202442020128
 ```
 
 **实际提交记录**（2026-06-20）：
