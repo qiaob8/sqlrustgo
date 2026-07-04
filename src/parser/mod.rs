@@ -44,6 +44,9 @@ pub enum Statement {
     Delete(DeleteStatement),
     CreateTable(CreateTableStatement),
     DropTable(DropTableStatement),
+    Begin,
+    Commit,
+    Rollback,
 }
 
 /// Aggregate function type
@@ -207,6 +210,18 @@ impl Parser {
             Some(Token::Delete) => self.parse_delete(),
             Some(Token::Create) => self.parse_create_table(),
             Some(Token::Drop) => self.parse_drop_table(),
+            Some(Token::Begin) => {
+                self.next();
+                Ok(Statement::Begin)
+            }
+            Some(Token::Commit) => {
+                self.next();
+                Ok(Statement::Commit)
+            }
+            Some(Token::Rollback) => {
+                self.next();
+                Ok(Statement::Rollback)
+            }
             Some(t) => Err(format!("Unexpected token: {:?}", t)),
             None => Err("Empty input".to_string()),
         }

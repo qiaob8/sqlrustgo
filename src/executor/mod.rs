@@ -93,6 +93,30 @@ impl ExecutionEngine {
             Statement::Delete(s) => self.execute_delete(s),
             Statement::CreateTable(c) => self.execute_create_table(c),
             Statement::DropTable(d) => self.execute_drop_table(d),
+            Statement::Begin => {
+                // BEGIN is a no-op for now (single-transaction mode)
+                Ok(ExecutionResult {
+                    rows_affected: 0,
+                    columns: Vec::new(),
+                    rows: Vec::new(),
+                })
+            }
+            Statement::Commit => {
+                // COMMIT is a no-op for now (auto-commit mode)
+                Ok(ExecutionResult {
+                    rows_affected: 0,
+                    columns: Vec::new(),
+                    rows: Vec::new(),
+                })
+            }
+            Statement::Rollback => {
+                // ROLLBACK is a no-op for now (auto-commit mode)
+                Ok(ExecutionResult {
+                    rows_affected: 0,
+                    columns: Vec::new(),
+                    rows: Vec::new(),
+                })
+            }
         }
     }
 

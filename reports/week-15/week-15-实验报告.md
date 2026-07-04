@@ -264,7 +264,7 @@ commit 18f3d4a8d208a0d24520ccc066124f4dd3f9c650 (HEAD -> experiment/week-15-2024
 
 #### 3.1 准备 Release 描述文件
 
-由于本地环境无法直接调用 GitHub API 创建 Release，按照实验要求准备了 3 个发布相关文件，全部存放在 `docs/releases/v1.0.0/`：
+按照实验要求准备了 3 个发布相关文件，全部存放在 `docs/releases/v1.0.0/`：
 
 **1. RELEASE_NOTES.md** —— 详细发布说明
 
@@ -289,9 +289,9 @@ commit 18f3d4a8d208a0d24520ccc066124f4dd3f9c650 (HEAD -> experiment/week-15-2024
 
 适用于 GitHub Release 页面的简短描述，包含亮点、QPS 表格、安装方式、致谢。
 
-#### 3.2 创建 GitHub Release 链接
+#### 3.2 创建 GitHub Release
 
-按照实验步骤，需要在 GitHub 上点击 "Draft a new release" 填写：
+在 GitHub 网页端完成 Release 创建：
 
 | 字段 | 内容 |
 |------|------|
@@ -306,9 +306,23 @@ commit 18f3d4a8d208a0d24520ccc066124f4dd3f9c650 (HEAD -> experiment/week-15-2024
 https://github.com/qiaob8/sqlrustgo/releases/new?tag=v1.0.0
 ```
 
-> 本地环境无法直接调用 `gh` CLI 创建 Release；上述链接提供了完整的填写参数，按照指引可在 GitHub 网页端一键完成。
 
-#### ✅ 检查点3：Release 描述文件已保存到 `docs/releases/v1.0.0/`
+
+#### 3.3 Release 成功创建
+
+Release 已成功发布，链接地址：
+
+```
+https://github.com/qiaob8/sqlrustgo/releases/tag/v1.0.0
+```
+
+#### ✅ 检查点3：Release 创建完成
+
+| 项目 | 内容 |
+|------|------|
+| Release 链接 | https://github.com/qiaob8/sqlrustgo/releases/tag/v1.0.0 |
+| Tag | v1.0.0 |
+| Title | SQLRustGo v1.0.0 - 首个稳定版本 |
 
 ---
 
@@ -366,6 +380,8 @@ v1.0.0
 | `docs/releases/v1.0.0/CHANGELOG.md`      | 变更日志（按类别）         |
 | `docs/releases/v1.0.0/GITHUB_RELEASE.md` | GitHub Release 短描述 |
 
+**Release 链接**：https://github.com/qiaob8/sqlrustgo/releases/tag/v1.0.0
+
 ### 4.4 完成情况
 
 | 任务           | 状态  | 说明                              |
@@ -414,15 +430,28 @@ v1.0.0
 
 ### 5.5 长期规划思考
 
-**短期目标（v1.1.0，Q2 2026）**：
+#### 版本路线图
+
+| 版本 | 目标 | 计划时间 |
+|------|------|---------|
+| v1.1.0 | 完善SQL支持 + 性能优化 | Q2 2026 |
+| v2.0.0 | 分布式架构 | Q4 2026 |
+| v3.0.0 | 云原生支持 | 2027 |
+
+#### 短期目标（v1.1.0，Q2 2026）
+
 - DELETE/UPDATE 性能优化（引入 WAL + 批量提交，目标 QPS ≥ 10,000）
 - 完善 SQL-92 子集（JOIN、子查询）
+- 文档完善（API 文档 + 使用教程）
 
-**中期目标（v2.0.0，Q4 2026）**：
+#### 中期目标（v2.0.0，Q4 2026）
+
 - 分布式架构（基于 Raft 的多副本）
 - 备份恢复机制
+- 高可用架构
 
-**长期目标（v3.0.0，2027）**：
+#### 长期目标（v3.0.0，2027）
+
 - 云原生部署（Kubernetes Operator）
 - 多租户支持
 - 企业级特性（审计、加密、监控）

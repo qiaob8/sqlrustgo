@@ -8,13 +8,8 @@ use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::Arc;
 
 fn main() {
-    println!("╔════════════════════════════════════════════════╗");
-    println!("║       SQLRustGo v1.0.0                        ║");
-    println!("║  A Rust SQL-92 Database Implementation       ║");
-    println!("╚════════════════════════════════════════════════╝");
-    println!();
-    println!("Type 'exit' or 'quit' to exit.");
-    println!("Type '.help' for commands.");
+    println!("SQLRustGo v1.0.0");
+    println!("Type 'exit' to quit, '.help' for commands.");
     println!();
 
     init();
@@ -30,7 +25,7 @@ fn main() {
     let mut engine = sqlrustgo::ExecutionEngine::new();
 
     while running.load(Ordering::SeqCst) {
-        print!("sqlrustgo> ");
+        print!("sql> ");
         if let Err(e) = io::stdout().flush() {
             eprintln!("Warning: failed to flush stdout: {}", e);
         }
@@ -117,6 +112,18 @@ fn print_result(result: ExecutionResult) {
     if result.rows.is_empty() {
         println!("OK, {} row(s) affected", result.rows_affected);
     } else {
+        // Print column headers
+        if !result.columns.is_empty() {
+            println!("{}", result.columns.join("\t"));
+            println!("{}", "-".repeat(result.columns.iter().map(|c| c.len()).max().unwrap_or(0) * result.columns.len() + (result.columns.len() - 1)));
+        }
+        
+        // Print rows
+        for row in &result.rows {
+            let values: Vec<String> = row.iter().map(|v| format!("{}", v)).collect();
+            println!("{}", values.join("\t"));
+        }
+        
         println!("{} row(s) in set", result.rows.len());
     }
 }

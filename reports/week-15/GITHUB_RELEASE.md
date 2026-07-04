@@ -30,6 +30,4 @@ cd sqlrustgo
 cargo test
 ```
 
-## 致谢
 
-感谢李莹老师的指导，以及实验小组成员的协作。
