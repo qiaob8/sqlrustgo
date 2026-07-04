@@ -1,0 +1,13 @@
+Cargo Test Summary (--all-features)
+====================================
+lib tests:     360 passed; 0 failed; 0 ignored
+auth tests:     22 passed; 0 failed
+ci tests:        5 passed; 0 failed
+integration:     8 passed; 0 failed
+project:         4 passed; 0 failed
+qps benchmarks:  4 ignored (long-running, by default)
+doctest:         1 ignored
+
+Total:         399 passed; 0 failed; 5 ignored
+
+Status: PASSED

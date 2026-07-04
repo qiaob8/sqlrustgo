@@ -1,0 +1,17 @@
+Cargo Fmt Summary (cargo fmt --check)
+=====================================
+Note: cargo fmt panics on Windows due to MAX_PATH; ran `rustfmt --check` directly
+      on each *.rs file as a fallback. cargo fmt in scripts/run_gates.sh works
+      correctly on Linux/macOS.
+
+Files checked:  22
+Files with formatting issues: 5
+  - src/lib.rs
+  - src/parser/mod.rs
+  - src/storage/bplus_tree/node.rs
+  - src/transaction/mod.rs
+  - src/transaction/wal.rs
+
+Status: FAILED (5 files need `cargo fmt`)
+
+Recommendation: Run `cargo fmt` to fix formatting before release.

@@ -1,0 +1,6 @@
+Cargo Build Summary (--release)
+================================
+Note: Ran with workaround `CARGO_TARGET_DIR=C:\t` and `TEMP=C:\tmp`
+      to bypass Windows MAX_PATH limitation.
+
+Status: PASSED (Finished `release` profile, optimized)
